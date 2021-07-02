@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "8235374743",
+    "project_id": "cushuttle-f60c6",
+    "storage_bucket": "cushuttle-f60c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8235374743:android:924c84cfbda0a46d17b1d2",
+        "android_client_info": {
+          "package_name": "com.example.shuttle_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8235374743-na9qdps2l0ord2iurj9s2r3hfcqog41f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD88YdY5KmplHvpCaHfukmgGCJHiOJ1_V0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8235374743-na9qdps2l0ord2iurj9s2r3hfcqog41f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

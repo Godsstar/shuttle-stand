@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">8235374743-na9qdps2l0ord2iurj9s2r3hfcqog41f.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">8235374743</string>
+    <string name="google_api_key" translatable="false">AIzaSyD88YdY5KmplHvpCaHfukmgGCJHiOJ1_V0</string>
+    <string name="google_app_id" translatable="false">1:8235374743:android:924c84cfbda0a46d17b1d2</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyD88YdY5KmplHvpCaHfukmgGCJHiOJ1_V0</string>
+    <string name="google_storage_bucket" translatable="false">cushuttle-f60c6.appspot.com</string>
+    <string name="project_id" translatable="false">cushuttle-f60c6</string>
+</resources>

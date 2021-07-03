@@ -1,4 +1,4 @@
-#Thu Jul 01 13:00:36 CDT 2021
-base.0=/home/colossal/AndroidStudioProjects/shuttle_tracker/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+#Sat Jul 03 16:00:42 WAT 2021
+base.0=C\:\\Users\\USER PC\\AndroidStudioProjects\\shuttle-stand\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

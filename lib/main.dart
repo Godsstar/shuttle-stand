@@ -2,6 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'Ui/GetUi.dart';
 import 'blocs/NavBloc/NavBloc.dart';
 import 'repo/constants.dart';
 import 'Ui/GetUi.dart';
@@ -31,9 +32,7 @@ class _BasePageState extends State<BasePage> {
             color: kNavBloc.fabColor,
           ),
         ),
-
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
         bottomNavigationBar: AnimatedBottomNavigationBar(
           onTap: (index) => setState(
             () => (index == 0)
@@ -42,7 +41,6 @@ class _BasePageState extends State<BasePage> {
                     ViewSchedules(),
                   ),
           ),
-
           activeIndex: kNavBloc.currentIndex,
           icons: [Icons.alt_route_rounded, Icons.access_time],
           activeColor: kBaseColor,
@@ -53,7 +51,6 @@ class _BasePageState extends State<BasePage> {
           rightCornerRadius: 5.0,
           gapLocation: GapLocation.center,
         ),
-
         body: BlocBuilder<NavBloc, NavState>(
           bloc: kNavBloc,
           builder: (context, state) {
@@ -65,10 +62,9 @@ class _BasePageState extends State<BasePage> {
               );
             else if (state is MapPage)
               return MapUi();
-            else if (state is SchedulesPage)
-              return Container(child: Center(child: Text('SCHEDULES PAGE'),),);
             else if (state is CredentialsPage)
               return CredsPage();
+            else if (state is SchedulesPage) return Schedule();
             return Container();
           },
         ),

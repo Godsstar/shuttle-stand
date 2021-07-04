@@ -33,7 +33,15 @@ class SignInForm extends StatelessWidget {
                   color: Colors.grey[300],
                   height: 2.0,
                 ),
-                SizedBox(height: 120.0,),
+                SizedBox(
+                  child: Text(
+                    'Drivers Only',
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
+                  ),
+                  height: 120.0,
+                ),
                 FormBuilderTextField(
                   name: 'email',
                   controller: email,
@@ -83,16 +91,14 @@ class SignInForm extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
-                    primary: kBackgroundColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)
-                    ),
-                    side: BorderSide(
-                      color: kBaseColor
-                    )
-                  ),
-                  onPressed: ()=>kLoginBloc.add(SignIn(email: email.text, password: password.text)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 100.0, vertical: 20.0),
+                      primary: kBackgroundColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0)),
+                      side: BorderSide(color: kBaseColor)),
+                  onPressed: () => kLoginBloc
+                      .add(SignIn(email: email.text, password: password.text)),
                   child: Text(
                     'Log in',
                     style: TextStyle(color: kBaseColor),
@@ -106,9 +112,12 @@ class SignInForm extends StatelessWidget {
                   children: [
                     Text(
                       'Don\'t have an account?',
-                      style: TextStyle(fontWeight: FontWeight.w300, color: kBaseColor),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w300, color: kBaseColor),
                     ),
-                    SizedBox(width: 5.0,),
+                    SizedBox(
+                      width: 5.0,
+                    ),
                     TextButton(
                       onPressed: () => kLoginBloc.add(GetSignUpCreds()),
                       child: Text(
@@ -126,7 +135,3 @@ class SignInForm extends StatelessWidget {
     );
   }
 }
-
-
-
-

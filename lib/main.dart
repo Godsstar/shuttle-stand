@@ -6,7 +6,6 @@ import 'Ui/GetUi.dart';
 import 'blocs/NavBloc/NavBloc.dart';
 import 'repo/constants.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -61,11 +60,7 @@ class _BasePageState extends State<BasePage> {
           bloc: kNavBloc,
           builder: (context, state) {
             if (state is RoutesPage)
-              return Container(
-                child: Center(
-                  child: Text('ROUTES PAGE'),
-                ),
-              );
+              return Dashboard();
             else if (state is MapPage)
               return MapUi();
             else if (state is CredentialsPage)

@@ -25,10 +25,10 @@ com/baseflow/geolocator/location/GeolocationManager.java
  com.baseflow.geolocator.location.GeolocationManager
 com/baseflow/geolocator/permission/PermissionUtils.java
  com.baseflow.geolocator.permission.PermissionUtils
-com/baseflow/geolocator/LocationServiceHandlerImpl.java
- com.baseflow.geolocator.LocationServiceHandlerImpl
 com/baseflow/geolocator/errors/PermissionUndefinedException.java
  com.baseflow.geolocator.errors.PermissionUndefinedException
+com/baseflow/geolocator/LocationServiceHandlerImpl.java
+ com.baseflow.geolocator.LocationServiceHandlerImpl
 com/baseflow/geolocator/GeolocatorPlugin.java
  com.baseflow.geolocator.GeolocatorPlugin
 com/baseflow/geolocator/utils/Utils.java

@@ -35,7 +35,15 @@ class SignUpForm extends StatelessWidget {
                   color: Colors.grey[300],
                   height: 2.0,
                 ),
-                SizedBox(height: 15.0,),
+                SizedBox(
+                  child: Text(
+                    'Drivers Only',
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
+                  ),
+                  height: 120.0,
+                ),
                 FormBuilderTextField(
                   controller: name,
                   name: 'FullName',
@@ -123,16 +131,17 @@ class SignUpForm extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 20.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 100.0, vertical: 20.0),
                       primary: kBackgroundColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0)
-                      ),
-                      side: BorderSide(
-                          color: kBaseColor
-                      )
-                  ),
-                  onPressed: ()=>kLoginBloc.add(SignUp(fullName: name.text, username: username.text, email: email.text, password: password.text)),
+                          borderRadius: BorderRadius.circular(15.0)),
+                      side: BorderSide(color: kBaseColor)),
+                  onPressed: () => kLoginBloc.add(SignUp(
+                      fullName: name.text,
+                      username: username.text,
+                      email: email.text,
+                      password: password.text)),
                   child: Text(
                     'Sign Up',
                     style: TextStyle(color: kBaseColor),
@@ -146,9 +155,12 @@ class SignUpForm extends StatelessWidget {
                   children: [
                     Text(
                       'Already have an account?',
-                      style: TextStyle(fontWeight: FontWeight.w400, color: kBaseColor),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400, color: kBaseColor),
                     ),
-                    SizedBox(width: 5.0,),
+                    SizedBox(
+                      width: 5.0,
+                    ),
                     TextButton(
                       onPressed: () => kLoginBloc.add(GetSignInCreds()),
                       child: Text(

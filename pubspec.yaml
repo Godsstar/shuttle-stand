@@ -35,8 +35,8 @@ flutter:
     - images/
 
 
-  fonts:
-    - family: DancingScript
-      fonts:
-        - asset: fonts/dancing_script.ttf
-
+#  fonts:
+#    - family: DancingScript
+#      fonts:
+#        - asset: fonts/dancing_script.ttf
+#

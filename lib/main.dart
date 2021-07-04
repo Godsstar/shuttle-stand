@@ -1,16 +1,22 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'Ui/GetUi.dart';
 import 'blocs/NavBloc/NavBloc.dart';
 import 'repo/constants.dart';
-import 'Ui/GetUi.dart';
 
-void main() => runApp(MaterialApp(
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
       home: BasePage(),
-    ));
+    ),
+  );
+}
 
 class BasePage extends StatefulWidget {
   const BasePage({Key? key}) : super(key: key);

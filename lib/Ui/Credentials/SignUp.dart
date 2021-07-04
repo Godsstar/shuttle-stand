@@ -132,7 +132,7 @@ class SignUpForm extends StatelessWidget {
                           color: kBaseColor
                       )
                   ),
-                  onPressed: (){},
+                  onPressed: ()=>kLoginBloc.add(SignUp(fullName: name.text, username: username.text, email: email.text, password: password.text)),
                   child: Text(
                     'Sign Up',
                     style: TextStyle(color: kBaseColor),
@@ -150,7 +150,7 @@ class SignUpForm extends StatelessWidget {
                     ),
                     SizedBox(width: 5.0,),
                     TextButton(
-                      onPressed: () => kLoginBloc.add(SignIn(email: email.text, password: password.text),),
+                      onPressed: () => kLoginBloc.add(GetSignInCreds()),
                       child: Text(
                         'Log In',
                         style: TextStyle(color: kBaseColor),

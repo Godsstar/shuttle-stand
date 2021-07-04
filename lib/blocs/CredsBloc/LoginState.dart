@@ -6,7 +6,13 @@ abstract class LoginState extends Equatable {
   List<Object> get props => [];
 }
 
-class SignedInPage extends LoginState{}
+class SignedInPage extends LoginState{
+  String email;
+  SignedInPage({required this.email});
+
+  @override
+  List<Object> get props => [email];
+}
 
 class SignedOutPage extends LoginState{}
 

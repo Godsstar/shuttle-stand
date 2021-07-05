@@ -1,6 +1,7 @@
 import 'package:shuttle_tracker/blocs/CredsBloc/CredsBloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import '../dashboard.dart';
 import '../../repo/constants.dart';
 import 'SignUp.dart';
 import 'SignIn.dart';
@@ -18,17 +19,7 @@ class _CredsPageState extends State<CredsPage> {
       builder: (context, state){
         if (state is SignedOutPage) return SignInForm();
         else if (state is SignUpPage) return SignUpForm();
-        else if (state is SignedInPage) return Container(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('You are currently Signed In as ${state.email}'),
-              SizedBox(height: 20.0,),
-              ElevatedButton(onPressed: ()=>kLoginBloc.add(SignOut()), child: Text('Sign Out'))
-            ],
-          ),
-        );
+        else if (state is SignedInPage) return Dashboard();
         return Container();
       },
     );

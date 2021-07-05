@@ -1,4 +1,4 @@
-#Sun Jul 04 15:43:19 WAT 2021
-base.0=C\:\\Users\\USER PC\\AndroidStudioProjects\\shuttle-stand\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Mon Jul 05 12:37:35 CDT 2021
+base.0=/home/colossal/StudioProjects/shuttle-stand/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

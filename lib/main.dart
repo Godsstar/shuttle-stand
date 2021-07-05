@@ -60,12 +60,13 @@ class _BasePageState extends State<BasePage> {
           bloc: kNavBloc,
           builder: (context, state) {
             if (state is RoutesPage)
-              return Dashboard();
+              return Container();
             else if (state is MapPage)
               return MapUi();
             else if (state is CredentialsPage)
               return CredsPage();
             else if (state is SchedulesPage) return Schedule();
+
             return Container();
           },
         ),

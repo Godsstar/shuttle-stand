@@ -18,3 +18,5 @@ class SignedOutPage extends LoginState{}
 
 class SignUpPage extends LoginState {}
 
+
+class LoadingPage extends LoginState{}

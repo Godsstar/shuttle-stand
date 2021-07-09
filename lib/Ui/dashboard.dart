@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shuttle_tracker/repo/constants.dart';
 import '../blocs/CredsBloc/LoginEvent.dart';
+import '../repo/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -46,7 +49,7 @@ class _DashboardState extends State<Dashboard> {
                             Row(
                               children: [
                                 Text(
-                                  'Mr Star',
+                                  '${kLoginBloc.driver?.username}',
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontSize: 20,

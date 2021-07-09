@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-
+import '../../repo/constants.dart';
 import 'package:bloc/bloc.dart';
-import 'package:shuttle_tracker/blocs/NavBloc/NavBloc.dart';
+import '../../repo/models.dart';
 import 'LoginEvent.dart';
 import 'LoginState.dart';
 
@@ -10,19 +10,17 @@ export 'LoginEvent.dart';
 export 'LoginState.dart';
 
 
-enum CredState {
-  SIGNED_IN,
-  SIGNED_OUT,
-}
+
 
 class LoginBloc extends Bloc<CredEvent, LoginState> {
-  FirebaseAuth auth = FirebaseAuth.instance;
-
-
-  CredState _credState = CredState.SIGNED_OUT;
+  Driver? _driver;
 
 
   LoginBloc() : super(SignedOutPage());
+
+
+  Driver? get driver => _driver;
+
 
   Stream<LoginState> mapEventToState(CredEvent event) async* {
     if (event is SignIn) yield* _mapSignInToState(event);
@@ -31,28 +29,53 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
     else if (event is SignUp) yield* _mapSignUpToState(event);
     else if (event is SignOut) yield* _mapSignOutToState(event);
     else if (event is SignedIn) yield* _mapSignedInToState(event);
+    else if (event is ShowLoading) yield* _mapShowLoadingToState(event);
 
   }
 
+
+
   Stream<LoginState> _mapSignInToState(SignIn event) async* {
+    yield LoadingPage();
+
     try{
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(email: event.email, password: event.password);
+      await kAuth.signInWithEmailAndPassword(email: event.email, password: event.password);
+
+      await setDriver(kAuth.currentUser!.email);
+
       this.add(SignedIn(email: event.email));
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        yield SignedOutPage();
       } else if (e.code == 'wrong-password') {
+        yield SignedOutPage();
         print('Wrong password provided for that user.');
       }
+      yield SignedOutPage();
+
+    } catch (e) {
+      yield SignedOutPage();
     }
   }
 
+
+
   Stream<LoginState> _mapSignUpToState(SignUp event) async* {
+    yield LoadingPage();
+
     try{
-      UserCredential user = await auth.createUserWithEmailAndPassword(email: event.email, password: event.password);
+      await kAuth.createUserWithEmailAndPassword(email: event.email, password: event.password);
+      await kDB.collection('users').doc(event.email).set({
+        'email' : event.email,
+        'username' : event.username,
+        'name' : event.fullName,
+      });
+
+      await kAuth.currentUser!.sendEmailVerification();
+
       this.add(SignedIn(email: event.email));
-      await auth.currentUser!.sendEmailVerification();
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -61,24 +84,49 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
       else if (e.code == 'email-already-in-use') {
         print('email is already in use.');
       }
+    } catch (e) {
+      yield SignUpPage();
     }
   }
 
+
+
   Stream<LoginState> _mapSignOutToState(SignOut event) async* {
-    await auth.signOut();
+    yield LoadingPage();
+
+    await _driver!.goOffline();
+    await kAuth.signOut();
+
     this.add(GetSignInCreds());
   }
 
+
   Stream<LoginState> _mapSignedInToState(SignedIn event) async* {
+    await this.setDriver(event.email);
     yield SignedInPage(email: event.email);
   }
+
 
   Stream<LoginState> _mapSignInCredsToState(GetSignInCreds event) async* {
     yield SignedOutPage();
   }
 
+
   Stream<LoginState> _mapSignUpCredsToState(GetSignUpCreds event) async* {
     yield SignUpPage();
+  }
+
+  Stream<LoginState> _mapShowLoadingToState(ShowLoading event) async* {
+    yield LoadingPage();
+  }
+
+
+  Future<void> setDriver(String? email) async {
+    DocumentSnapshot user = await kDB.collection('users').doc(email).get();
+    if (user.exists) {
+      _driver = Driver.fromDocSnap(user);
+      _driver!.goOnline();
+    }
   }
 
 

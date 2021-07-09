@@ -43,3 +43,7 @@ class GetSignUpCreds extends CredEvent {
 class GetSignInCreds extends CredEvent {
   GetSignInCreds() : super(email: 'signin', password: '');
 }
+
+class ShowLoading extends CredEvent{
+  ShowLoading() : super(email: 'loading', password: 'loading');
+}

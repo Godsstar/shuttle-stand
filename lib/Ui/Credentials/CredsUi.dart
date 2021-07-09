@@ -1,4 +1,5 @@
 import 'package:shuttle_tracker/blocs/CredsBloc/CredsBloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import '../dashboard.dart';
@@ -20,6 +21,9 @@ class _CredsPageState extends State<CredsPage> {
         if (state is SignedOutPage) return SignInForm();
         else if (state is SignUpPage) return SignUpForm();
         else if (state is SignedInPage) return Dashboard();
+        else if (state is LoadingPage) return SpinKitDoubleBounce(
+          color: kBaseColor,
+        );
         return Container();
       },
     );

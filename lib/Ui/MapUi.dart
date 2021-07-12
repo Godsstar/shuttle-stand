@@ -42,7 +42,7 @@ class _MapUiState extends State<MapUi> {
         bloc: widget.bloc,
 
         builder: (context, markers) {
-          Timer.periodic(Duration(seconds: 5), (timer) {
+          tracker = Timer.periodic(Duration(seconds: 5), (timer) {
             widget.bloc.add(updateMap());
           });
 

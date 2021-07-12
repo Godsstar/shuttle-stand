@@ -13,6 +13,9 @@ export 'LoginState.dart';
 
 
 class LoginBloc extends Bloc<CredEvent, LoginState> {
+  String selectedShuttle = 'Select Vehicle';
+  bool toggleState = false;
+
   Driver? _driver;
 
 
@@ -32,6 +35,7 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
     else if (event is ShowLoading) yield* _mapShowLoadingToState(event);
 
   }
+
 
 
 
@@ -102,8 +106,26 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
 
 
   Stream<LoginState> _mapSignedInToState(SignedIn event) async* {
+    //
+    bool lockShuttle = false;
+
+    //Give default values if they come back null
+    bool onlineToggle = event.ToggleOnlineStatus ?? false;
+    bool capacityToggle = event.ToggleCapacityStatus ?? false;
+    String vehicle = event.selectedVehicle ?? '';
+
+
+    //process values
+    (vehicle != '') ? await _driver!.setShuttle(Shuttle(ID: event.selectedVehicle, current_driver: event.email)) : {};
+
+    (onlineToggle == true && vehicle != '') ? await _driver!.goOnline() : _driver?.goOffline();
+    (_driver!.hasShuttle == true) ? lockShuttle = true : lockShuttle = false;
+
+    (capacityToggle == true) ? {} : {};
+
     await this.setDriver(event.email);
-    yield SignedInPage(email: event.email);
+
+    yield SignedInPage(email: event.email, LockShuttle: lockShuttle, OnlineStatus: this.driver?.online_status, selectedVehicle: this.driver?.shuttle?.name);
   }
 
 

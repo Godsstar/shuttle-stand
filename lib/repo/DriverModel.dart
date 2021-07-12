@@ -19,9 +19,11 @@ class Driver extends Equatable {
 
   final String _name, _email, _username;
   
-  Shuttle? _shuttle = Shuttle(ID: 'CAR1', current_driver: 'star');
+  Shuttle? _shuttle;
 
-  bool _online = true;
+  bool _online = false;
+
+  bool get hasShuttle => (_shuttle != null) ? true : false;
 
   StreamSubscription<LocationData>? _newLocation;
 
@@ -41,10 +43,10 @@ class Driver extends Equatable {
   setShuttle(Shuttle? shuttle) => _shuttle = shuttle;
 
   goOnline() async {
-    await _shuttle!.setStatus(true);
+    await _shuttle?.setStatus(true);
     await kDB.collection('online_users').doc(_username).set(
         {
-          'shuttle': _shuttle!.id,
+          'shuttle': _shuttle?.name,
         }
     );
 
@@ -52,21 +54,33 @@ class Driver extends Equatable {
     _online = true;
     _currentLocation = Location();
     _newLocation = _currentLocation!.onLocationChanged.listen((event) {
-      _shuttle!.updateLocation(event.latitude ?? 0.0, event.longitude ?? 0.0);
+      _shuttle?.updateLocation(event.latitude ?? 0.0, event.longitude ?? 0.0);
     });
   }
   
   
   goOffline() async {
+
     _online = false;
 
-    _newLocation!.cancel();    _currentLocation = null;
+    await _newLocation?.cancel();
 
-    await _shuttle!.setStatus(false);
+    _currentLocation = null;
+
+    await _shuttle?.setStatus(false);
 
     await kDB.collection('online_users').doc(_username).delete();
 
-    await _shuttle!.updateLocation(0.0, 0.0);
+    await _shuttle?.updateLocation(0.0, 0.0);
+
+    await _exitShuttle();
+
+  }
+
+
+  _exitShuttle() async {
+    await kDB.collection('shuttles').doc(_shuttle?.name).update({'current_driver' : ''});
+
     _shuttle = null;
 
   }

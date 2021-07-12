@@ -1,4 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:google_directions_api/google_directions_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'repo/constants.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  DirectionsService.init('AIzaSyAUdzstv-HNibyhGbitYP2gAl5CtMYCq5A');
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,

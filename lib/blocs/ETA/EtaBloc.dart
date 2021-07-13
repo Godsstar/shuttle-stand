@@ -21,17 +21,18 @@ class EtaBloc extends Bloc<updateETA, List<Shuttle>> {
   final etaCalculator = DirectionsService();
 
   EtaBloc() : super([
-    Shuttle(ID: 'Blue Toyota', current_driver: ''),
-    Shuttle(ID: 'Grey Toyota', current_driver: ''),
-    Shuttle(ID: 'Costa Bus', current_driver: ''),
-    Shuttle(ID: 'Green Sienna', current_driver: ''),
-    Shuttle(ID: 'Brown Sienna', current_driver: ''),
-    Shuttle(ID: 'White Sienna', current_driver: ''),
+    Shuttle(ID: 'Blue Toyota', current_driver: '', online: true, eta: '5 Minutes'),
+    Shuttle(ID: 'Grey Toyota', current_driver: '', online: false, eta: ''),
+    Shuttle(ID: 'Costa Bus', current_driver: '', online: false, eta: ''),
+    Shuttle(ID: 'Green Sienna', current_driver: '', online: true, eta: '3 Minutes'),
+    Shuttle(ID: 'Brown Sienna', current_driver: '', online: true, eta: '2 Minutes'),
+    Shuttle(ID: 'White Sienna', current_driver: '', online: false, eta: ''),
 
   ]) {
     getShuttles();
 
   }
+
 
 
   List<Shuttle> get shuttles => _shuttles;
@@ -48,8 +49,7 @@ class EtaBloc extends Bloc<updateETA, List<Shuttle>> {
       LatLng deviceLoc = LatLng(
           deviceLocation.latitude ?? 0.0, deviceLocation.longitude ?? 0.0);
 
-      DirectionsResult? response =
-          await getEta(shuttle, shuttleLocation, deviceLoc);
+      // DirectionsResult? response =await getEta(shuttle, shuttleLocation, deviceLoc);
     });
 
     yield _shuttles;
@@ -70,7 +70,7 @@ class EtaBloc extends Bloc<updateETA, List<Shuttle>> {
   }
 
   Future<dynamic> getEta(QueryDocumentSnapshot shuttle, LatLng shuttleLoc, LatLng deviceLoc) async {
-    DirectionsResult? res;
+    // DirectionsResult? res;
 
     final request = DirectionsRequest(
       origin: 'New York',

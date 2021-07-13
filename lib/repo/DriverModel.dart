@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:location/location.dart';
 import 'ShuttleModel.dart';
-import 'constants.dart';
 import 'dart:async';
 
 
@@ -39,20 +38,18 @@ class Driver extends Equatable {
   bool get online_status => _online;
 
   
-  
+
+
   setShuttle(Shuttle? shuttle) => _shuttle = shuttle;
 
+
   goOnline() async {
-    await _shuttle?.setStatus(true);
-    await kDB.collection('online_users').doc(_username).set(
-        {
-          'shuttle': _shuttle?.name,
-        }
-    );
-
-
     _online = true;
+
+    await _shuttle?.setStatus(true);
+
     _currentLocation = Location();
+
     _newLocation = _currentLocation!.onLocationChanged.listen((event) {
       _shuttle?.updateLocation(event.latitude ?? 0.0, event.longitude ?? 0.0);
     });
@@ -69,20 +66,13 @@ class Driver extends Equatable {
 
     await _shuttle?.setStatus(false);
 
-    await kDB.collection('online_users').doc(_username).delete();
-
     await _shuttle?.updateLocation(0.0, 0.0);
 
-    await _exitShuttle();
-
-  }
-
-
-  _exitShuttle() async {
-    await kDB.collection('shuttles').doc(_shuttle?.name).update({'current_driver' : ''});
+    await _shuttle?.resetDriver();
 
     _shuttle = null;
-
   }
-  
+
+  setStatus(bool status) => (status == true) ? this.goOnline() : this.goOffline();
+
 }

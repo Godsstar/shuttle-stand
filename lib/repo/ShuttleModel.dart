@@ -7,15 +7,14 @@ import 'constants.dart';
 class Shuttle extends Equatable {
   final String _name, _current_driver;
   bool? _online_status = false;
-  String? _ImageDir;
+  String? _ImageDir, _eta;
   LatLng? _location;
 
 
-  Shuttle({required ID, required current_driver, location, online}) : _name = ID, _current_driver = current_driver {
+  Shuttle({required ID, required current_driver, location, online, eta}) : _name = ID, _current_driver = current_driver, _eta = eta{
     _assignImageDir();
     _location = location ?? LatLng(0.0, 0.0);
     _online_status = online ?? false;
-    alertDB();
   }
 
 
@@ -29,6 +28,8 @@ class Shuttle extends Equatable {
   }
 
   String get name => _name;
+
+  String? get eta => _eta;
 
   String get ImageDir => _ImageDir!;
 
@@ -51,7 +52,9 @@ class Shuttle extends Equatable {
   
   setStatus(bool status) async {
     _online_status = status;
-    await kDB.collection('shuttles').doc(_name).update({'online_status' : status});
+
+    await kDB.collection('shuttles').doc(_name).update({'online_status' : status, 'current_driver' : _current_driver});
+
   }
 
 
@@ -73,5 +76,6 @@ class Shuttle extends Equatable {
     kDB.collection('shuttles').doc(_name).update({'current_driver' : _current_driver});
   }
 
+  resetDriver() => kDB.collection('shuttles').doc(this._name).update({'current_driver' : ''});
 
 }

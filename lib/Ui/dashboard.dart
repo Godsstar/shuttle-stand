@@ -1,32 +1,30 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shuttle_tracker/blocs/CredsBloc/CredsBloc.dart';
 import 'package:shuttle_tracker/repo/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/CredsBloc/LoginEvent.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../repo/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 
 class Dashboard extends StatefulWidget {
-
   @override
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-  bool onlineToggle = false;
+/*  bool onlineToggle = false;
   bool temp = false;
   int count = 0;
-  String Selectedshuttle = 'Select Vehicle';
+  String Selectedshuttle = 'Select Vehicle';*/
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       bloc: kLoginBloc,
       builder: (context, state) {
         if (state is SignedInPage) {
-          count += 1;
           return SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Padding(
@@ -34,7 +32,6 @@ class _DashboardState extends State<Dashboard> {
               child: Container(
                 child: Column(
                   children: [
-                    Text('Counter: $count'),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15.0),
                       child: Card(
@@ -61,7 +58,9 @@ class _DashboardState extends State<Dashboard> {
                                   Row(
                                     children: [
                                       Text(
-                                        (kLoginBloc.driver!.hasShuttle == true) ? kLoginBloc.driver!.shuttle!.name : 'Select Vehicle' ,
+                                        (kLoginBloc.driver!.hasShuttle == true)
+                                            ? kLoginBloc.driver!.shuttle!.name
+                                            : 'Select Vehicle' ,
                                         style: TextStyle(
                                           color: Colors.red,
                                           fontSize: 20,
@@ -88,12 +87,14 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     // Drop down to pick a vehicle
-                    Padding(
+                    (state.LockShuttle == true)
+                        ? Container(width: 0.0, height: 0.0,)
+                        : Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: DropdownButton<String>(
                         hint: Text('Select Vehicle'),
-                        value: Selectedshuttle,
-                        onChanged: (vehicle) => setState(()=> Selectedshuttle = vehicle ?? ''),
+                        value: kLoginBloc.selectedShuttle,
+                        onChanged: (vehicle) => setState(() => kLoginBloc.add(chooseVehicle(vehicle)) ),
                         items: [
                           'Select Vehicle',
                           'White Sienna',
@@ -131,9 +132,9 @@ class _DashboardState extends State<Dashboard> {
                                 children: [
                                   /*2*/
                                   Container(
-                                    padding: const EdgeInsets.only(bottom: 0),
+                                    padding: EdgeInsets.only(bottom: 0),
                                     child: Text(
-                                      'Online / Offline',
+                                      'OFFLINE / ONLINE',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
@@ -146,18 +147,10 @@ class _DashboardState extends State<Dashboard> {
                             /*3*/
                             Switch(
                                 activeColor: Colors.red,
-                                value: onlineToggle,
-                                onChanged: (newVal) => (Selectedshuttle != 'Select Vehicle')
-                                    ? {
-                                      onlineToggle = newVal,
-                                      setState(()=>
-                                        kLoginBloc.add(SignedIn(email: kAuth.currentUser!.email ?? '' ,
-                                        ToggleOnlineStatus: newVal,
-                                        selectedVehicle: Selectedshuttle),)
-                                        )
-                                      }
-
-                                    : ScaffoldMessenger.of(context).showSnackBar(SnackBar(backgroundColor: kBaseColor,content: Text('select a vehicle'),)),
+                                value: kLoginBloc.toggleState,
+                                onChanged: (newVal) => (kLoginBloc.selectedShuttle != 'Select Vehicle')
+                                  ? setState( () => kLoginBloc.add(ToggleOnlineStatus(status: newVal)) )
+                                  : ScaffoldMessenger.of(context).showSnackBar(SnackBar(backgroundColor: kBaseColor,content: Text('select a vehicle'),),),
                             ),
                           ],
                         ),

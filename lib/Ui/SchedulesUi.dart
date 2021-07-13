@@ -1,11 +1,9 @@
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shuttle_tracker/repo/models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../blocs/ETA/EtaBloc.dart';
 import '../repo/constants.dart';
-import 'dart:async';
 
 class Schedule extends StatefulWidget {
   @override
@@ -29,7 +27,7 @@ class _ScheduleState extends State<Schedule> {
                     name: shuttles[index].name,
                     image: Image.asset(shuttles[index].ImageDir),
                     online: shuttles[index].Online!,
-                    eta: '5 Minutes'
+                    eta: (shuttles[index].eta ==  '' && shuttles[index].Online == true) ? 'calculating...' : shuttles[index].eta!,
                 );
               }
 

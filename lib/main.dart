@@ -1,5 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:google_directions_api/google_directions_api.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +10,24 @@ import 'repo/constants.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  DirectionsService.init('AIzaSyAUdzstv-HNibyhGbitYP2gAl5CtMYCq5A');
+
+  // DirectionsService.init('AIzaSyAUdzstv-HNibyhGbitYP2gAl5CtMYCq5A');
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BasePage(),
+      home: SplashScreenView(
+      backgroundColor: Colors.white,
+      imageSrc: 'images/logo.png',
+      imageSize: 100,
+      duration: 5000,
+      navigateRoute: BasePage(),
+      )
     ),
   );
 }
 
-class BasePage extends StatefulWidget {
-  const BasePage({Key? key}) : super(key: key);
 
+class BasePage extends StatefulWidget {
   @override
   _BasePageState createState() => _BasePageState();
 }
@@ -76,3 +82,7 @@ class _BasePageState extends State<BasePage> {
     );
   }
 }
+
+
+/*
+*  BasePage()*/

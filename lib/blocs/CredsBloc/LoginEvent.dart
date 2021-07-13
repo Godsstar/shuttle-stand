@@ -34,11 +34,9 @@ class SignOut extends CredEvent {
 
 class SignedIn extends CredEvent {
   String email;
-  String? selectedVehicle;
-  bool? ToggleOnlineStatus = false;
-  bool? ToggleCapacityStatus = false;
-  SignedIn({required this.email, this.selectedVehicle, this.ToggleCapacityStatus, this.ToggleOnlineStatus} ) : super(email: '', password: '');
+  SignedIn({required this.email} ) : super(email: '', password: '');
 }
+
 
 class GetSignUpCreds extends CredEvent {
   GetSignUpCreds() : super(email: 'signup', password: '');
@@ -49,4 +47,16 @@ class GetSignInCreds extends CredEvent {
 
 class ShowLoading extends CredEvent{
   ShowLoading() : super(email: 'loading', password: 'loading');
+}
+
+
+class chooseVehicle extends CredEvent {
+  final String? vehicle;
+  chooseVehicle(this.vehicle) : super(email: '', password: '');
+}
+
+
+class ToggleOnlineStatus extends CredEvent {
+  final bool status;
+  ToggleOnlineStatus({required this.status}) : super(email: '', password: '');
 }

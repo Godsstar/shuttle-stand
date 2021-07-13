@@ -8,6 +8,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "archive",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/archive-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "async",
       "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/async-2.7.0",
       "packageUri": "lib/",
@@ -68,8 +74,20 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "crypto",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "cupertino_icons",
       "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "dots_indicator",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/dots_indicator-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -242,8 +260,20 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "image",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/image-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "intl",
       "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "introduction_screen",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/introduction_screen-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -314,6 +344,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "petitparser",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/petitparser-4.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
       "name": "plugin_platform_interface",
       "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-2.0.0",
       "packageUri": "lib/",
@@ -340,6 +376,12 @@
     {
       "name": "source_span",
       "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "splash_screen_view",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/splash_screen_view-3.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -386,8 +428,26 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "universal_io",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/universal_io-2.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "xml",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/xml-5.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "yaml",
+      "rootUri": "file:///home/colossal/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -398,7 +458,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-07-11T21:44:57.718473Z",
+  "generated": "2021-07-13T13:44:33.223422Z",
   "generator": "pub",
   "generatorVersion": "2.14.0-254.0.dev"
 }

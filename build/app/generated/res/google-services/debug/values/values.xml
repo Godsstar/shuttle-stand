@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="default_web_client_id" translatable="false">8235374743-na9qdps2l0ord2iurj9s2r3hfcqog41f.apps.googleusercontent.com</string>
-    <string name="gcm_defaultSenderId" translatable="false">8235374743</string>
-    <string name="google_api_key" translatable="false">AIzaSyD88YdY5KmplHvpCaHfukmgGCJHiOJ1_V0</string>
-    <string name="google_app_id" translatable="false">1:8235374743:android:924c84cfbda0a46d17b1d2</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyD88YdY5KmplHvpCaHfukmgGCJHiOJ1_V0</string>
-    <string name="google_storage_bucket" translatable="false">cushuttle-f60c6.appspot.com</string>
-    <string name="project_id" translatable="false">cushuttle-f60c6</string>
+    <string name="default_web_client_id" translatable="false">748881048410-t5j17v4td4amtu23h40lesr5n58pq3bc.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">748881048410</string>
+    <string name="google_api_key" translatable="false">AIzaSyCnP-PvtwKQBzpYtmb5y-RDSHaMd5xFiTU</string>
+    <string name="google_app_id" translatable="false">1:748881048410:android:3838f84d6114c45887b963</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCnP-PvtwKQBzpYtmb5y-RDSHaMd5xFiTU</string>
+    <string name="google_storage_bucket" translatable="false">shuttletracker-5ce11.appspot.com</string>
+    <string name="project_id" translatable="false">shuttletracker-5ce11</string>
 </resources>

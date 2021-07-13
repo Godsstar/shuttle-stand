@@ -13,8 +13,9 @@ export 'LoginState.dart';
 
 
 class LoginBloc extends Bloc<CredEvent, LoginState> {
-  String selectedShuttle = 'Select Vehicle';
-  bool toggleState = false;
+  String? _selectedShuttle = 'Select Vehicle';
+  bool _toggleState = false;
+  bool _lockShuttle = false;
 
   Driver? _driver;
 
@@ -24,15 +25,21 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
 
   Driver? get driver => _driver;
 
+  String? get selectedShuttle => _selectedShuttle;
+
+  bool get toggleState => _toggleState;
+
 
   Stream<LoginState> mapEventToState(CredEvent event) async* {
     if (event is SignIn) yield* _mapSignInToState(event);
+    if (event is chooseVehicle) yield* _mapChooseVehicleToState(event);
     if (event is GetSignInCreds) yield* _mapSignInCredsToState(event);
     if (event is GetSignUpCreds) yield* _mapSignUpCredsToState(event);
     else if (event is SignUp) yield* _mapSignUpToState(event);
     else if (event is SignOut) yield* _mapSignOutToState(event);
     else if (event is SignedIn) yield* _mapSignedInToState(event);
     else if (event is ShowLoading) yield* _mapShowLoadingToState(event);
+    if (event is ToggleOnlineStatus) yield* _mapToggleStatusToState(event);
 
   }
 
@@ -45,7 +52,9 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
     try{
       await kAuth.signInWithEmailAndPassword(email: event.email, password: event.password);
 
-      await setDriver(kAuth.currentUser!.email);
+      await this.setDriver(kAuth.currentUser!.email!);
+
+      this.resetDashBoard();
 
       this.add(SignedIn(email: event.email));
 
@@ -78,6 +87,8 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
       });
 
       await kAuth.currentUser!.sendEmailVerification();
+      
+      this.resetDashBoard();
 
       this.add(SignedIn(email: event.email));
 
@@ -99,33 +110,40 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
     yield LoadingPage();
 
     await _driver!.goOffline();
+
     await kAuth.signOut();
 
     this.add(GetSignInCreds());
   }
 
+  Stream<LoginState> _mapChooseVehicleToState(chooseVehicle event) async* {
+    (event.vehicle != 'Select Vehicle')
+        ? {
+            _driver!.setShuttle(Shuttle(ID: event.vehicle, current_driver: _driver!.name)),
+            _selectedShuttle = event.vehicle,
+          }
+        : {};
+
+    this.add(SignedIn(email: event.email));
+  }
+
+  Stream<LoginState> _mapToggleStatusToState(ToggleOnlineStatus event) async* {
+    if (event.status == false) _selectedShuttle = 'Select Vehicle';
+    
+    _toggleState = event.status ;
+
+    await _driver!.setStatus(event.status);
+
+    (_driver!.hasShuttle == true) ? _lockShuttle = true : _lockShuttle = false;
+
+    this.add(SignedIn(email: event.email));
+
+  }
+
 
   Stream<LoginState> _mapSignedInToState(SignedIn event) async* {
-    //
-    bool lockShuttle = false;
-
-    //Give default values if they come back null
-    bool onlineToggle = event.ToggleOnlineStatus ?? false;
-    bool capacityToggle = event.ToggleCapacityStatus ?? false;
-    String vehicle = event.selectedVehicle ?? '';
-
-
-    //process values
-    (vehicle != '') ? await _driver!.setShuttle(Shuttle(ID: event.selectedVehicle, current_driver: event.email)) : {};
-
-    (onlineToggle == true && vehicle != '') ? await _driver!.goOnline() : _driver?.goOffline();
-    (_driver!.hasShuttle == true) ? lockShuttle = true : lockShuttle = false;
-
-    (capacityToggle == true) ? {} : {};
-
-    await this.setDriver(event.email);
-
-    yield SignedInPage(email: event.email, LockShuttle: lockShuttle, OnlineStatus: this.driver?.online_status, selectedVehicle: this.driver?.shuttle?.name);
+    if (_lockShuttle == true) _selectedShuttle = null;
+    yield SignedInPage(email: event.email, LockShuttle: _lockShuttle);
   }
 
 
@@ -143,13 +161,17 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
   }
 
 
-  Future<void> setDriver(String? email) async {
+  setDriver(String email) async {
     DocumentSnapshot user = await kDB.collection('users').doc(email).get();
     if (user.exists) {
       _driver = Driver.fromDocSnap(user);
-      _driver!.goOnline();
     }
   }
 
+  resetDashBoard() {
+    this._selectedShuttle = 'Select Vehicle';
+    this._toggleState = false;
+    this._lockShuttle = false;
+  }
 
 }

@@ -18,9 +18,11 @@ dependencies:
   flutter_form_builder: ^6.0.1
   google_maps_flutter: ^2.0.6
   permission_handler: ^8.1.2
+  splash_screen_view: ^3.0.0
   cloud_firestore: ^2.3.0
   cupertino_icons: ^1.0.2
   flutter_spinkit:
+  introduction_screen:
   geoflutterfire: ^3.0.1
   firebase_core: ^1.3.0
   firebase_auth: ^2.0.0
@@ -38,6 +40,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - images/onBoarding/
     - images/shuttles/
 
 

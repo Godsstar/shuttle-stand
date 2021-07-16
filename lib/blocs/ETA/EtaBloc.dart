@@ -15,18 +15,26 @@ class EtaBloc extends Bloc<updateETA, List<Shuttle>> {
   QuerySnapshot? _snapshotVar;
   Location _locator = Location();
   Timer? updateShuttles;
+  Map<String, int> carsEta = {
+    'Blue Toyota' : 0,
+    'Grey Toyota' : 0,
+    'White Sienna' : 0,
+    'Brown Sienna' : 0,
+    'Green Sienna' : 0,
+    'Costa Bus' : 0,
+  };
 
   StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? autoUpdateShuttles;
 
   final etaCalculator = DirectionsService();
 
   EtaBloc() : super([
-    Shuttle(ID: 'Blue Toyota', current_driver: '', online: true, eta: '5 Minutes'),
-    Shuttle(ID: 'Grey Toyota', current_driver: '', online: false, eta: ''),
-    Shuttle(ID: 'Costa Bus', current_driver: '', online: false, eta: ''),
-    Shuttle(ID: 'Green Sienna', current_driver: '', online: true, eta: '3 Minutes'),
-    Shuttle(ID: 'Brown Sienna', current_driver: '', online: true, eta: '2 Minutes'),
-    Shuttle(ID: 'White Sienna', current_driver: '', online: false, eta: ''),
+    Shuttle(ID: 'Blue Toyota', current_driver: '', online: false, eta: 'calculating...'),
+    Shuttle(ID: 'Grey Toyota', current_driver: '', online: false, eta: 'calculating...'),
+    Shuttle(ID: 'Costa Bus', current_driver: '', online: false, eta: 'calculating...'),
+    Shuttle(ID: 'Green Sienna', current_driver: '', online: false, eta: 'calculating...'),
+    Shuttle(ID: 'Brown Sienna', current_driver: '', online: false, eta: 'calculating...'),
+    Shuttle(ID: 'White Sienna', current_driver: '', online: false, eta: 'calculating...'),
 
   ]) {
     getShuttles();
@@ -42,14 +50,16 @@ class EtaBloc extends Bloc<updateETA, List<Shuttle>> {
     getShuttles();
     _snapshotVar = await kDB.collection('shuttles').get();
     LocationData deviceLocation = await _locator.getLocation();
-
+    _shuttles = [];
     _snapshotVar!.docs.forEach((shuttle) async {
-      LatLng shuttleLocation = LatLng(shuttle['current_location'].latitude,
-          shuttle['current_location'].longitude);
-      LatLng deviceLoc = LatLng(
-          deviceLocation.latitude ?? 0.0, deviceLocation.longitude ?? 0.0);
+      if (shuttle['online_status'] == true) {
+        LatLng shuttleLocation = LatLng(shuttle['current_location'].latitude, shuttle['current_location'].longitude);
+        LatLng deviceLoc = LatLng(deviceLocation.latitude ?? 0.0, deviceLocation.longitude ?? 0.0);
 
-      // DirectionsResult? response =await getEta(shuttle, shuttleLocation, deviceLoc);
+        _shuttles.add(await getEta(shuttle, shuttleLocation, deviceLoc));
+      }
+
+      else _shuttles.add(Shuttle(ID: shuttle.id, current_driver: '', online: false, eta: ''));
     });
 
     yield _shuttles;
@@ -69,28 +79,39 @@ class EtaBloc extends Bloc<updateETA, List<Shuttle>> {
 
   }
 
-  Future<dynamic> getEta(QueryDocumentSnapshot shuttle, LatLng shuttleLoc, LatLng deviceLoc) async {
-    // DirectionsResult? res;
+
+  Future<Shuttle> getEta(QueryDocumentSnapshot shuttle, LatLng shuttleLoc, LatLng deviceLoc) async {
 
     final request = DirectionsRequest(
-      origin: 'New York',
-      destination: 'San Francisco',
+      origin: '${shuttleLoc.latitude},${shuttleLoc.longitude}',
+      destination: '${deviceLoc.latitude},${deviceLoc.longitude}',
       travelMode: TravelMode.driving,
-      // optimizeWaypoints: true,
-      // alternatives: false,
+      optimizeWaypoints: true,
+      alternatives: false,
     );
 
-    etaCalculator.route(request,
-        (response, status) => (status == DirectionsStatus.ok)
-            ? {
-          print('\n\n\n\n\n\n\n\n\n\n\nSUCCESSSSSS\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
+    etaCalculator.route(request, (response, status) {
+      carsEta[shuttle.id] = 0;
 
-        }: {});
+      if (status == DirectionsStatus.ok) response.routes![0].legs![0].steps!.forEach( (step) =>
+        carsEta[shuttle.id] = carsEta[shuttle.id]! + int.parse(step.duration!.text![0])
+      );
+
+      if (carsEta[shuttle.id]! >= 10 && carsEta[shuttle.id]! < 13) carsEta[shuttle.id] = carsEta[shuttle.id]! - 6;
+      else if (carsEta[shuttle.id]! > 5 && carsEta[shuttle.id]! < 10) carsEta[shuttle.id] = carsEta[shuttle.id]! - 4;
+      else if (carsEta[shuttle.id]! >= 13) carsEta[shuttle.id] = carsEta[shuttle.id]! - 9;
+      else if (carsEta[shuttle.id]! < 5 && carsEta[shuttle.id]! > 2) carsEta[shuttle.id] = carsEta[shuttle.id]! - 2;
+    });
+    return Shuttle(ID: shuttle.id, current_driver: shuttle['current_driver'], online: shuttle['online_status'], eta: '${carsEta[shuttle.id]} Minutes');
+
 
   }
+
+
 
   @override
   void dispose(){
     updateShuttles!.cancel();
   }
+
 }

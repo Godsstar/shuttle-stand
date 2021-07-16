@@ -88,7 +88,7 @@ class LoginBloc extends Bloc<CredEvent, LoginState> {
 
       await kAuth.currentUser!.sendEmailVerification();
       
-      this.resetDashBoard();
+      await this.resetDashBoard();
 
       this.add(SignedIn(email: event.email));
 

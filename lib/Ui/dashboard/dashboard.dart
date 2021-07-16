@@ -1,10 +1,10 @@
 import 'package:shuttle_tracker/blocs/CredsBloc/CredsBloc.dart';
 import 'package:shuttle_tracker/repo/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../blocs/CredsBloc/LoginEvent.dart';
+import '../../blocs/CredsBloc/LoginEvent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../repo/constants.dart';
+import '../../repo/constants.dart';
 
 
 
@@ -14,10 +14,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-/*  bool onlineToggle = false;
-  bool temp = false;
-  int count = 0;
-  String Selectedshuttle = 'Select Vehicle';*/
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +54,7 @@ class _DashboardState extends State<Dashboard> {
                                   Row(
                                     children: [
                                       Text(
-                                        (kLoginBloc.driver!.hasShuttle == true)
+                                        (kLoginBloc.driver?.hasShuttle == true)
                                             ? kLoginBloc.driver!.shuttle!.name
                                             : 'Select Vehicle' ,
                                         style: TextStyle(

@@ -1,17 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../blocs/RoutesBloc/BusStopBloc.dart';
+import '../blocs/AdminBloc/AdminBloc.dart';
 import '../blocs/CredsBloc/CredsBloc.dart';
 import '../blocs/NavBloc/NavBloc.dart';
-import '../blocs/ETA/EtaBloc.dart';
 import 'package:flutter/material.dart';
+import '../blocs/ETA/EtaBloc.dart';
 
 Color kBackgroundColor = Color(0xFFEDF1F9);
 Color kBaseColor = Color(0xFF70498A);
 LoginBloc kLoginBloc = LoginBloc();
 NavBloc kNavBloc = NavBloc();
 EtaBloc kEtaBloc = EtaBloc();
+StandsEta kStandsBloc = StandsEta();
 
-
+final AdminBloc adminBloc = AdminBloc();
 FirebaseAuth kAuth = FirebaseAuth.instance;
 FirebaseFirestore kDB = FirebaseFirestore.instance;
 

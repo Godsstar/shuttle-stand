@@ -36,6 +36,11 @@ class MapBloc extends Bloc<MapEvent, Map<String, Marker>> {
               markerId: MarkerId(shuttle.id),
               position: LatLng(shuttle['current_location'].latitude,
                   shuttle['current_location'].longitude),
+              infoWindow: InfoWindow(
+                title: shuttle.id.toUpperCase(),
+                snippet: 'DRIVER: ${shuttle['current_driver'].toString().toUpperCase()}'
+              ),
+              icon: _carIcon!,
             )
           : {};
     });
@@ -45,6 +50,6 @@ class MapBloc extends Bloc<MapEvent, Map<String, Marker>> {
 
   void makeCarIcon() async {
     _carIcon = await BitmapDescriptor.fromAssetImage(
-    ImageConfiguration(size: Size(0.12313, 0.12311)), 'images/motto.png');
+    ImageConfiguration(size: Size(0.1, 0.1)), 'images/motto.png');
   }
 }

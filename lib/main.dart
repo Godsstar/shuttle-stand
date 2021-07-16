@@ -1,4 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:google_directions_api/google_directions_api.dart';
+import 'package:shuttle_tracker/Ui/RoutesUi.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,12 +8,13 @@ import 'package:flutter/material.dart';
 import 'Ui/GetUi.dart';
 import 'blocs/NavBloc/NavBloc.dart';
 import 'repo/constants.dart';
+import 'Ui/dashboard/AdminDashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  DirectionsService.init('AIzaSyCBtswCK8sqjQyMSOziKZdUcYSav7se-qU');
 
-  // DirectionsService.init('AIzaSyAUdzstv-HNibyhGbitYP2gAl5CtMYCq5A');
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -37,7 +40,10 @@ class _BasePageState extends State<BasePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        // resizeToAvoidBottomInset: false,
+        backgroundColor: kBackgroundColor,
         floatingActionButton: FloatingActionButton(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           onPressed: () => setState(() => kNavBloc.add(ViewMap())),
           backgroundColor: kBackgroundColor,
           child: Icon(
@@ -68,7 +74,7 @@ class _BasePageState extends State<BasePage> {
           bloc: kNavBloc,
           builder: (context, state) {
             if (state is RoutesPage)
-              return Container();
+              return RoutesUi();
             else if (state is MapPage)
               return MapUi();
             else if (state is CredentialsPage)

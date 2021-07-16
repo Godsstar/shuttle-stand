@@ -27,7 +27,7 @@ class _ScheduleState extends State<Schedule> {
                     name: shuttles[index].name,
                     image: Image.asset(shuttles[index].ImageDir),
                     online: shuttles[index].Online!,
-                    eta: (shuttles[index].eta ==  '' && shuttles[index].Online == true) ? 'calculating...' : shuttles[index].eta!,
+                    eta: shuttles[index].eta ?? 'Null',
                 );
               }
 
@@ -37,8 +37,3 @@ class _ScheduleState extends State<Schedule> {
   }
 }
 
-
-
-
-
-// CardDisplay(name: 'Grey Toyota',image: Image.asset('images/shuttles/GreyToyota.jpeg'), eta: '5 Minutes', online: false,),

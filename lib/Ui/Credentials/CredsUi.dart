@@ -2,7 +2,7 @@ import 'package:shuttle_tracker/blocs/CredsBloc/CredsBloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import '../dashboard.dart';
+import '../dashboard/dashboard.dart';
 import '../../repo/constants.dart';
 import 'SignUp.dart';
 import 'SignIn.dart';

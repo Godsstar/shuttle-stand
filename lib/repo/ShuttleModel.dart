@@ -18,7 +18,8 @@ class Shuttle extends Equatable {
   }
 
 
-  factory Shuttle.fromSnapshot(DocumentSnapshot snapshot) {
+  factory Shuttle.fromSnapshot(var docSnap) {
+    DocumentSnapshot snapshot = docSnap as DocumentSnapshot;
      return Shuttle(
          ID: snapshot.id,
          current_driver: snapshot['current_driver'].toString(),
@@ -30,6 +31,8 @@ class Shuttle extends Equatable {
   String get name => _name;
 
   String? get eta => _eta;
+
+  setEta(String eta) => _eta = eta;
 
   String get ImageDir => _ImageDir!;
 

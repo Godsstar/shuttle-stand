@@ -8,7 +8,8 @@ import 'dart:async';
 class Driver extends Equatable {
   Driver({required name, required email, required username}) : _name = name, _email = email, _username = username;
 
-  factory Driver.fromDocSnap(DocumentSnapshot docSnap) {
+  factory Driver.fromDocSnap(var snapshot) {
+    DocumentSnapshot docSnap = snapshot as DocumentSnapshot;
     return Driver(
         name: docSnap['name'].toString(),
         email: docSnap['email'].toString(),
